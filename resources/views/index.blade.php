@@ -7,13 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <title>Document</title>
+
 </head>
 
-<body>
+<body style="background-color: #1b16165f">
 
     <div class="container">
-        <h1 class="text-center pt-4">Search with Relationship in <strong class="text-danger">Laravel</strong></h1>
+        <h1 class="text-center pt-4">Feedback-Tool Relationship in <strong class="text-danger">Laravel</strong></h1>
         <hr>
         <div class="row py-2">
             <div class="col-md-6">
