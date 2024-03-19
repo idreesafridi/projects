@@ -26,9 +26,9 @@ Route::get('/search',[ PostController::class, 'search']);
 
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
+Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('user.login');;
 
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
