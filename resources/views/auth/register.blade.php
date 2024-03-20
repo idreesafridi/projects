@@ -31,6 +31,7 @@
                 <div class="col-md-6">
                     <h2 class="text-center mb-4">Register Form</h2>
                     <form method="POST" action="{{ route('user.register') }}">
+                        @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
                             <input class="form-control" name="name" required autofocus>

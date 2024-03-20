@@ -32,6 +32,7 @@
                 <div class="col-md-6">
                     <h2 class="text-center mb-4">Login Form</h2>
                     <form method="POST" action="{{ route('user.login') }}">
+                        @csrf
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
                             <input class="form-control" id="email" type="email" name="email"
@@ -56,7 +57,7 @@
                         <a href="#">Forgot Password?</a>
                     </div>
                     <div class="text-center mt-3">
-                        <span>Don't have an account? <a href="{{ Route('register') }}">Sign Up</a></span>
+                        <span>Don't have an Account? <a href="{{ Route('register') }}">Sign Up</a></span>
                     </div>
                 </div>
             </div>
