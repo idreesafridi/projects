@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -12,7 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(6);
+        $posts = Post::paginate(10);
         return view('index', compact('posts'));
     }
 
@@ -26,13 +28,10 @@ class PostController extends Controller
             $query->where('title', 'LIKE', "%$search%")
                 ->orWhere('description', 'LIKE', "%$search%");
         })
-        ->orWhereHas('category',function($query) use ($search){
-                 $query->where('name', 'LIKE', "%$search%");
-         })
          ->orWhereHas('user',function($query) use ($search) {
              $query->where('name','LIKE', "%$search%");
 
-         })->get();
+         })->paginate(10);
          return view( 'index' ,compact('posts','search'));
     }
 
@@ -49,15 +48,31 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'You need to log in to add a post.');
+        }
+        // Validate form data
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            
+        ]);
 
+        // Create a new post instance
+        $post = new Post();
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->user_id = auth()->user()->id; // Assign the current user's ID
+        $post->save();
+
+        return redirect()->back()->with('success', 'Post added successfully!');
+    }
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show()
     {
-        //
+        return view('addpost');
     }
 
     /**
@@ -79,6 +94,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+   
     public function destroy(Post $post)
     {
         //
