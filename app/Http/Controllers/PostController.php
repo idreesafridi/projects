@@ -14,12 +14,18 @@ class PostController extends Controller
      */
     public function index()
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'You need to log in to add a post.');
+        }
         $posts = Post::paginate(10);
         return view('index', compact('posts'));
     }
 
     public function search(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'You need to log in to add a post.');
+        }
         // Get the search value from the request
         $search = $request->search;
 
@@ -35,13 +41,7 @@ class PostController extends Controller
          return view( 'index' ,compact('posts','search'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+  
 
     /**
      * Store a newly created resource in storage.
@@ -65,38 +65,17 @@ class PostController extends Controller
         $post->user_id = auth()->user()->id; // Assign the current user's ID
         $post->save();
 
-        return redirect()->back()->with('success', 'Post added successfully!');
+        return redirect()->route('home')->with('success', 'Post added successfully!');
     }
     /**
      * Display the specified resource.
      */
     public function show()
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'You need to log in to add a post.');
+        }
         return view('addpost');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Post $post)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-   
-    public function destroy(Post $post)
-    {
-        //
-    }
 }
