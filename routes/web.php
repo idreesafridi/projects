@@ -21,19 +21,23 @@ use App\Http\Controllers\CommentController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
-Route::get('/',[PostController::class,'index']); 
+Route::middleware(['auth'])->group(function () {
+Route::get('/',[PostController::class,'index'])->name('home');
+Route::get('/search',[ PostController::class, 'search']); 
 Route::get('/add-post',[PostController::class,'show'])->name('show.post');
 Route::post('/add-post', [PostController::class, 'store'])->name('add-post');
-Route::any('/comments', [CommentController::class, 'store'])->name('comments.store');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::get('/comment_view', [CommentController::class, 'view'])->name('comments.view');
-Route::get('/search',[ PostController::class, 'search']);
+
+Route::Post('/logout', [LogoutController::class, 'logout'])->name('logout');
+});
+
+Route::middleware('guest')->group(function () {
+Route::any('/register-form', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::Post('/register', [RegisterController::class, 'store'])->name('users.register');
+
+Route::any('/login-form', [LoginController::class, 'showLoginForm'])->name('login');
+Route::Post('/login', [LoginController::class, 'login'])->name('user.login');
+});
 
 
-Route::get('/register-form', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register'])->name('user.register');
-
-Route::get('/login-form', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('user.login');;
-
-Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');

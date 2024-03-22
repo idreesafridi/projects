@@ -10,11 +10,14 @@ class CommentController extends Controller
 {
         public function showCommentForm($id)
         {
+            if (!auth()->check()) {
+                return redirect()->route('login')->with('error', 'You need to log in to add a post.');
+            }
             // dd($id->all());
             return view('Comment',compact('id'));
         }
         public function store(Request $request)
-    {
+       {
         if (!auth()->check()) {
             return redirect()->route('login')->with('error', 'You need to log in to add a post.');
         }
@@ -34,6 +37,9 @@ class CommentController extends Controller
     }
     public function view()
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'You need to log in to add a post.');
+        }
         $comments = comment::paginate(10);
 
         // Pass the post data to the view

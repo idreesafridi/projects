@@ -26,32 +26,28 @@
 
 
     <div class="container mt-5">
-        <div class="card" id="">
+        <div class="card">
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <h2 class="text-center mb-4">Register Form</h2>
-                    <form method="POST" action="{{ route('user.register') }}">
+                    <form action="{{ route('users.register') }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Name</label>
-                            <input class="form-control" name="name" required autofocus>
+                            <input class="form-control" id="name" type="text" name="name"
+                                value="{{ old('name') }}">
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email address</label>
-                            <input class="form-control" id="email" type="email" name="email"
-                                value="{{ old('email') }}" required autofocus>
+                            <input class="form-control" type="email" name="email" value="{{ old('email') }}">
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input class="form-control" id="password" type="password" name="password" required
-                                autocomplete="current-password">
+                            <input class="form-control" id="password" type="password" name="password" required>
                         </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="remember">
-                            <label class="form-check-label" for="remember">Remember me</label>
-                        </div>
+
                         <div class="mb-3 text-center">
                             <button type="submit" class="btn btn-primary btn-block">Register</button>
                         </div>
