@@ -71,6 +71,10 @@
                             <td>{{ $post->user->name }}</td>
                             <td>{{ $post->description }}</td>
                             <td>
+
+                                <button type="button" class="btn btn-danger"
+                                    onclick="deletePost({{ $post->id }})">Delete Post</button>
+
                                 {{-- <button onclick="openModal('{{ $post->id }}')">Add Comment</button> --}}
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#myModal{{ $post->id }}">
@@ -117,11 +121,17 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="commentModalLabel">Comments</h5>
-                                                <button type="button" class="close" onclick="closeModal()"
-                                                    data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <h5 class="modal-title" id="commentModalLabel">Comments</h5>
+                                                    </div>
+                                                    <div class="col text-end">
+                                                        <button type="button" class="close" onclick="closeModal()"
+                                                            data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="modal-body" id="commentModalBody">
                                                 <!-- Comments will be displayed here -->
@@ -144,32 +154,6 @@
     @include('layout.footer')
 
 </body>
-
-<script>
-    function loadComments(postId) {
-        $.ajax({
-            url: '/posts/' + postId + '/comments',
-            method: 'GET',
-            success: function(response) {
-                // Process the comments and display them in the modal or any other container
-                console.log(response);
-                // Example: display comments in a modal
-                $('#commentModalBody').empty(); // Clear existing comments
-                $.each(response.data, function(index, comment) {
-                    $('#commentModalBody').append('<p>' + comment.content + '</p>');
-                });
-                $('#commentModal').modal('show'); // Show the modal
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
-</script>
-<script>
-    function closeModal() {
-        $('#commentModal').modal('hide');
-    }
-</script>
+<script src="{{ asset('js/script.js') }}"></script>
 
 </html>
