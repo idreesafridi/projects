@@ -21,13 +21,17 @@ use App\Http\Controllers\CommentController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::middleware(['auth'])->group(function () {
+
 Route::get('/',[PostController::class,'index'])->name('home');
+Route::middleware(['auth'])->group(function () {
+
 Route::get('/search',[ PostController::class, 'search']); 
 Route::get('/add-post',[PostController::class,'show'])->name('show.post');
 Route::post('/add-post', [PostController::class, 'store'])->name('add-post');
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::get('/comment_view', [CommentController::class, 'view'])->name('comments.view');
+Route::get('/posts/{id}/comments', [CommentController::class,'getPostComments'])->name('posts.comments');
+
 
 Route::Post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });

@@ -14,18 +14,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'You need to log in to add a post.');
-        }
+       
         $posts = Post::paginate(10);
         return view('index', compact('posts'));
     }
 
     public function search(Request $request)
     {
-        if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'You need to log in to add a post.');
-        }
+       
         // Get the search value from the request
         $search = $request->search;
 

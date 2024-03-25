@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 
@@ -45,4 +46,14 @@ class CommentController extends Controller
         // Pass the post data to the view
         return view('comment', compact('comments'));
     }
+
+    // CommentController.php
+
+    public function getPostComments($postId)
+    {
+        $post = Post::findOrFail($postId);
+        $comments = $post->comments()->paginate(10); // Adjust the pagination as needed
+        return response()->json($comments);
+    }
+
 }

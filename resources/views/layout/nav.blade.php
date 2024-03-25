@@ -8,15 +8,33 @@
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton"
                 data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-fw fa-user"></i>
-                {{ Auth::user()->name }}
+                {{-- {{ Auth::user()->name }} --}}
+                @auth
+                    <!-- User is authenticated -->
+                    Welcome, {{ auth()->user()->name }}
+                @else
+                    <!-- User is not authenticated -->
+                    Welcome, Guest
+                @endauth
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a class="dropdown-item" href="#">Action</a></li>
                 <li>
-                    <form method="POST" action="{{ route('logout') }}">
+                    @guest
+                        <!-- User is a guest (not logged in) -->
+                        <!-- You can place any guest-specific content here if needed -->
+                    @else
+                        <!-- User is authenticated -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="dropdown-item">Log Out</button>
+                        </form>
+                    @endguest
+
+                    {{-- <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="dropdown-item">Log Out</button>
-                    </form>
+                    </form> --}}
                 </li>
             </ul>
         </div>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -15,6 +15,7 @@
 
 <body style="background-color: #1b16165f">
     @include('layout.nav')
+
     <div class="wrapper">
         <div class="container ">
 
@@ -58,9 +59,8 @@
         </div>
     </div>
 
-
     @include('layout.footer')
 
 </body>
 
-</html>
+</html> --}}

@@ -8,7 +8,9 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
         /* Custom CSS */
         html,
@@ -69,14 +71,12 @@
                             <td>{{ $post->user->name }}</td>
                             <td>{{ $post->description }}</td>
                             <td>
-
                                 {{-- <button onclick="openModal('{{ $post->id }}')">Add Comment</button> --}}
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#myModal{{ $post->id }}">
                                     Add Comment
                                 </button>
-                                <a href="{{ route('comments.view', $post->id) }}"> <button class="btn btn-primary">View
-                                        Comment</button> </a>
+
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal{{ $post->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -104,10 +104,34 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                {{-- <a href="{{ route('comments.view', $post->id) }}"> <button class="btn btn-primary">View
+                                        Comment</button> </a> --}}
+
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#commentModal" onclick="loadComments({{ $post->id }})">View
+                                    Comments</button>
+
+                                <div class="modal fade" id="commentModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="commentModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="commentModalLabel">Comments</h5>
+                                                <button type="button" class="close" onclick="closeModal()"
+                                                    data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body" id="commentModalBody">
+                                                <!-- Comments will be displayed here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </td>
                     @endforeach
-
-
                     </tr>
                 </tbody>
             </table>
@@ -115,15 +139,37 @@
 
         </div>
     </div>
-    {{-- <input type="hidden" id="postid" value="" /> --}}
+
 
     @include('layout.footer')
+
 </body>
 
-{{-- <script>
-    function openModal(postId) {
-        document.getElementById("postid").value = postId;
+<script>
+    function loadComments(postId) {
+        $.ajax({
+            url: '/posts/' + postId + '/comments',
+            method: 'GET',
+            success: function(response) {
+                // Process the comments and display them in the modal or any other container
+                console.log(response);
+                // Example: display comments in a modal
+                $('#commentModalBody').empty(); // Clear existing comments
+                $.each(response.data, function(index, comment) {
+                    $('#commentModalBody').append('<p>' + comment.content + '</p>');
+                });
+                $('#commentModal').modal('show'); // Show the modal
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
     }
-</script> --}}
+</script>
+<script>
+    function closeModal() {
+        $('#commentModal').modal('hide');
+    }
+</script>
 
 </html>
