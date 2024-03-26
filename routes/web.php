@@ -32,8 +32,6 @@ Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.de
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::get('/comment_view', [CommentController::class, 'view'])->name('comments.view');
 Route::get('/posts/{id}/comments', [CommentController::class,'getPostComments'])->name('posts.comments');
-
-
 Route::Post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
