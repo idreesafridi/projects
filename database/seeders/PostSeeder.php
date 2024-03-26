@@ -13,20 +13,19 @@ class PostSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
-    {
-        $categories = Category::all();
-        $user = User::all();
+        public function run(): void
+        {
+        
+            $user = User::all();
 
-        for($i = 0; $i <=20; $i++)   {
-            Post::create([
-                'user_id' => $user->random()->id,
-                'category_id' => $categories->random()->id,
-                'title' => 'Post '. $i,
-                'description' => 'Lorem ipsum dolor sit amet, Qui, quod, quibus.',
-                
+            for($i = 0; $i <=20; $i++)   {
+                Post::create([
+                    'user_id' => $user->random()->id,
+                    'title' => 'Post '. $i,
+                    'description' => 'Lorem ipsum dolor sit amet, Qui, quod, quibus.',
+                    
 
-            ]);
-    }
-}
+                ]);
+            }
+        }
 }
