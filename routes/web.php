@@ -24,7 +24,6 @@ use App\Http\Controllers\CommentController;
 
 Route::get('/',[PostController::class,'index'])->name('home');
 Route::middleware(['auth'])->group(function () {
-
 Route::get('/search',[ PostController::class, 'search']); 
 Route::get('/add-post',[PostController::class,'show'])->name('show.post');
 Route::post('/add-post', [PostController::class, 'store'])->name('add-post');
@@ -38,7 +37,6 @@ Route::Post('/logout', [LogoutController::class, 'logout'])->name('logout');
 Route::middleware('guest')->group(function () {
 Route::any('/register-form', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::Post('/register', [RegisterController::class, 'store'])->name('users.register');
-
 Route::any('/login-form', [LoginController::class, 'showLoginForm'])->name('login');
 Route::Post('/login', [LoginController::class, 'login'])->name('user.login');
 });
