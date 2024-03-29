@@ -27,7 +27,8 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/search',[ PostController::class, 'search']); 
 Route::get('/add-post',[PostController::class,'show'])->name('show.post');
 Route::post('/add-post', [PostController::class, 'store'])->name('add-post');
-Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+// Route::delete('/posts/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+Route::delete('/delete_post/{id}', [PostController::class, 'destroy']);
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 Route::get('/comment_view', [CommentController::class, 'view'])->name('comments.view');
 Route::get('/posts/{id}/comments', [CommentController::class,'getPostComments'])->name('posts.comments');

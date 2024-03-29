@@ -15,7 +15,6 @@
     <script src="{{ asset('js/script.js') }}"></script>
 
 
-
     <style>
         /* Custom CSS */
         html,
@@ -63,27 +62,24 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="modelBody">
+                <tbody>
                     @foreach ($posts as $post)
-                        <tr>
+                        <tr id="tr_{{ $post->id }}">
                             <td scope="row">{{ $post->id }}</td>
                             <td scope="row">{{ $post->title }}</td>
                             <td scope="row">{{ $post->user->name }}</td>
                             <td scope="row">{{ $post->description }}</td>
                             <td scope="row">
-
-                                {{-- <button class="btn btn-danger delete-post"
-                                    data-delete-url="{{ route('posts.destroy', ['id' => $post->id]) }}">Delete</button> --}}
-
+                                {{-- 
                                 <button class="btn btn-danger delete-post" data-post-id="{{ $post->id }}"
-                                    data-delete-url="{{ route('posts.destroy', ['id' => $post->id]) }}">Delete</button>
-
+                                    data-delete-url="{{ route('posts.destroy', ['id' => $post->id]) }}">Delete</button> --}}
+                                <a href="javascript:void(0)" class="btn btn-danger"
+                                    onclick="deletepost({{ $post->id }})">delete</a>
                                 {{-- <button onclick="openModal('{{ $post->id }}')">Add Comment</button> --}}
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#myModal{{ $post->id }}">
                                     Add Comment
                                 </button>
-
                                 <!-- Modal -->
                                 <div class="modal fade" id="myModal{{ $post->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -111,14 +107,11 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 {{-- <a href="{{ route('comments.view', $post->id) }}"> <button class="btn btn-primary">View
                                         Comment</button> </a> --}}
-
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                     data-target="#commentModal" onclick="loadComments({{ $post->id }})">View
                                     Comments</button>
-
                                 <div class="modal fade" id="commentModal" tabindex="-1" role="dialog"
                                     aria-labelledby="commentModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -152,6 +145,8 @@
         </div>
     </div>
     @include('layout.footer')
+
+
 </body>
 
 
