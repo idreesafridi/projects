@@ -5,11 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
+
+
 
     <style>
         /* Custom CSS */
@@ -40,7 +45,6 @@
 <body style="background-color: #1b16165f">
     @include('layout.nav')
     <div class="wrapper">
-
         <div class="container">
             <h1 class="text-center pt-4">Feedback-Tool Relationship in <strong class="text-danger">Laravel</strong></h1>
             <hr>
@@ -48,10 +52,7 @@
                 <div class="col-md-6">
                     <h2><a href="{{ route('show.post') }}" class="btn btn-success">Add New Post</a></h2>
                 </div>
-
             </div>
-
-
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -62,18 +63,20 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="modelBody">
                     @foreach ($posts as $post)
                         <tr>
                             <td scope="row">{{ $post->id }}</td>
-                            <td>{{ $post->title }}</td>
+                            <td scope="row">{{ $post->title }}</td>
+                            <td scope="row">{{ $post->user->name }}</td>
+                            <td scope="row">{{ $post->description }}</td>
+                            <td scope="row">
 
-                            <td>{{ $post->user->name }}</td>
-                            <td>{{ $post->description }}</td>
-                            <td>
+                                {{-- <button class="btn btn-danger delete-post"
+                                    data-delete-url="{{ route('posts.destroy', ['id' => $post->id]) }}">Delete</button> --}}
 
-                                <button type="button" class="btn btn-danger"
-                                    onclick="deletePost({{ $post->id }})">Delete Post</button>
+                                <button class="btn btn-danger delete-post" data-post-id="{{ $post->id }}"
+                                    data-delete-url="{{ route('posts.destroy', ['id' => $post->id]) }}">Delete</button>
 
                                 {{-- <button onclick="openModal('{{ $post->id }}')">Add Comment</button> --}}
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -146,14 +149,10 @@
                 </tbody>
             </table>
             {{ $posts->onEachside(1)->links() }}
-
         </div>
     </div>
-
-
     @include('layout.footer')
-
 </body>
-<script src="{{ asset('js/script.js') }}"></script>
+
 
 </html>

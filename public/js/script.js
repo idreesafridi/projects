@@ -24,24 +24,34 @@ function closeModal() {
     $("#commentModal").modal("hide");
 }
 
-//for deleting the post
-function deletePost(postId) {
-    if (confirm("Are you sure you want to delete this post?")) {
-        $.ajax({
-            url: "/posts/" + postId,
-            method: "DELETE",
-            headers: {
-                "X-CSRF-TOKEN": "{{ csrf_token() }}",
-            },
-            success: function (response) {
-                // Optionally, perform any actions after successful deletion
-                // For example, you can redirect to another page
-                window.location.href = "/posts";
-            },
-            error: function (xhr, status, error) {
-                console.error(error);
-                alert("An error occurred while deleting the post.");
-            },
-        });
-    }
-}
+$(document).ready(function () {
+    $(".delete-post").on("click", function (event) {
+        event.preventDefault();
+        // dd($(this).clicked());
+        var postId = $(this).data("post-id"); // Get the post ID from data attribute
+        var deleteUrl = $(this).data("delete-url"); // Get the delete URL from data attribute
+        if (confirm("Are you sure you want to delete this post?")) {
+            $.ajax({
+                url: deleteUrl,
+                type: "DELETE", // Use DELETE method
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                        "content"
+                    ),
+                },
+                success: function (data) {
+                    if (data.success) {
+                        // Remove the deleted post from the UI
+                        $("#post-" + postId).remove();
+                    } else {
+                        alert("Failed to delete post.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    alert("An error occurred while deleting the post.");
+                },
+            });
+        }
+    });
+});
