@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\MigrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,9 @@ use App\Http\Controllers\CommentController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+Route::get('/migrate', [MigrationController:: class,'migrate']);
+
 
 Route::get('/',[PostController::class,'index'])->name('home');
 Route::middleware(['auth'])->group(function () {
